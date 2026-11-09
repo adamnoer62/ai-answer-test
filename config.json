@@ -1,0 +1,92 @@
+{
+  "settings": {
+    "defaultRounds": 3,
+    "minRounds": 1,
+    "maxRounds": 6,
+    "agreementThreshold": 0.86,
+    "agreementStreakToStop": 2,
+    "timeoutMs": 300000,
+    "transcriptDir": "transcripts"
+  },
+  "defaultParticipantIds": ["gemini", "codex"],
+  "defaultJudgeId": "claude",
+  "palette": [
+    ["#1CB0F6", "#1899D6"],
+    ["#19C37D", "#12A06A"],
+    ["#FF9600", "#E08300"],
+    ["#CE82FF", "#A568CC"],
+    ["#FF4B4B", "#EA2B2B"],
+    ["#FFC800", "#E0AC00"],
+    ["#2B70C9", "#1F58A3"],
+    ["#00C2A8", "#009985"]
+  ],
+  "engines": [
+    {
+      "id": "gemini",
+      "engineLabel": "Gemini · Antigravity CLI",
+      "command": "agy",
+      "baseArgs": ["-p", "{PROMPT}", "--output-format", "json", "--dangerously-skip-permissions", "--sandbox", "{MODELFLAGS}"],
+      "modelFlag": "--model",
+      "output": { "type": "json", "textPath": "response", "statusPath": "status", "okStatus": "SUCCESS" },
+      "suggestedModels": [
+        "Gemini 3.6 Flash (High)",
+        "Gemini 3.6 Flash (Medium)",
+        "Gemini 3.5 Flash (High)",
+        "Gemini 3.1 Pro (High)",
+        "Claude Sonnet 4.6 (Thinking)",
+        "Claude Opus 4.6 (Thinking)",
+        "GPT-OSS 120B (Medium)"
+      ]
+    },
+    {
+      "id": "codex",
+      "engineLabel": "GPT · Codex CLI",
+      "command": "codex",
+      "baseArgs": ["exec", "--skip-git-repo-check", "--approve-for-me", "{MODELFLAGS}", "-o", "{OUTFILE}", "{PROMPT}"],
+      "modelFlag": "-m",
+      "output": { "type": "last-message-file" },
+      "suggestedModels": ["gpt-5.6-terra"]
+    },
+    {
+      "id": "claude",
+      "engineLabel": "Claude · Claude Code CLI",
+      "command": "claude",
+      "baseArgs": ["-p", "{PROMPT}", "--output-format", "json", "--allowedTools", "mcp__wrapstation-db", "{MODELFLAGS}"],
+      "modelFlag": "--model",
+      "output": { "type": "json", "textPath": "result", "errorFlagPath": "is_error" },
+      "suggestedModels": ["sonnet", "opus", "haiku", "fable"]
+    }
+  ],
+  "models": [
+    {
+      "id": "gemini",
+      "engineId": "gemini",
+      "label": "Gemini",
+      "modelVariant": "Gemini 3.6 Flash (Low)",
+      "color": "#1CB0F6",
+      "colorDark": "#1899D6",
+      "persona": null,
+      "builtin": true
+    },
+    {
+      "id": "codex",
+      "engineId": "codex",
+      "label": "GPT",
+      "modelVariant": "",
+      "color": "#19C37D",
+      "colorDark": "#12A06A",
+      "persona": null,
+      "builtin": true
+    },
+    {
+      "id": "claude",
+      "engineId": "claude",
+      "label": "Claude",
+      "modelVariant": "",
+      "color": "#FF9600",
+      "colorDark": "#E08300",
+      "persona": null,
+      "builtin": true
+    }
+  ]
+}
